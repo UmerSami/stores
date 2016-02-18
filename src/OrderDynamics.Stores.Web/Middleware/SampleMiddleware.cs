@@ -1,14 +1,18 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
+using Microsoft.Extensions.OptionsModel;
+using OrderDynamics.Stores.Web.Infrastructure;
 
 namespace OrderDynamics.Stores.Web.Middleware
 {
     public class SampleMiddleware {
         private readonly RequestDelegate _next;
+        private readonly IOptions<ConfigurationOptions> _options; 
 
-        public SampleMiddleware(RequestDelegate next) {
+        public SampleMiddleware(RequestDelegate next, IOptions<ConfigurationOptions> options) {
             _next = next;
+            _options = options;
         }
 
         public async Task Invoke(HttpContext context) {
