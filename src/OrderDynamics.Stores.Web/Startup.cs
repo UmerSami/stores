@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using OrderDynamics.Stores.Web.Middleware;
 
 namespace OrderDynamics.Stores.Web
 {
@@ -15,14 +16,15 @@ namespace OrderDynamics.Stores.Web
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app) {
+            app.UseMiddleware<SampleMiddleware>();
+            app.UseStaticFiles();
             app.UseMvc(ConfigureRoutes);
         }
 
         private static void ConfigureRoutes(IRouteBuilder routeBuilder) {
             routeBuilder.MapRoute(
                 name: "default",
-                template: "{controller}/{action}/{id?}",
-                defaults: new {controller = "Home", action = "Index"});
+                template: "{controller=Home}/{action=Index}/{id?}");
         }
 
         // Entry point for the application.
