@@ -8,7 +8,9 @@
     "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
     "Microsoft.AspNet.Mvc.Core": "6.0.0-rc1-final",
     "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
-    "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final"
+    "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+    "System.Net.Http": "4.0.1-beta-23516",
+    "System.Runtime.Serialization.Json": "4.0.0"
   },
 
   "commands": {

@@ -2,9 +2,9 @@
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 using Microsoft.Extensions.OptionsModel;
-using OrderDynamics.Stores.Web.Infrastructure;
+using OrderDynamics.Stores.Web.Infrastructure.Configuration;
 
-namespace OrderDynamics.Stores.Web.Middleware
+namespace OrderDynamics.Stores.Web.Infrastructure.Middleware
 {
     public class SampleMiddleware {
         private readonly RequestDelegate _next;

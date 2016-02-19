@@ -4,8 +4,10 @@ using Microsoft.AspNet.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
-using OrderDynamics.Stores.Web.Infrastructure;
-using OrderDynamics.Stores.Web.Middleware;
+using OrderDynamics.Stores.Web.Infrastructure.ApiClient;
+using OrderDynamics.Stores.Web.Infrastructure.Configuration;
+using OrderDynamics.Stores.Web.Infrastructure.Middleware;
+using OrderDynamics.Stores.Web.Infrastructure.Services;
 
 namespace OrderDynamics.Stores.Web
 {
@@ -24,6 +26,9 @@ namespace OrderDynamics.Stores.Web
             services.Configure<ConfigurationOptions>(Configuration);
 
             services.AddMvc();
+
+            services.AddTransient<IApiClient, WebApiClient>();
+            services.AddScoped<IShipmentService, ShipmentService>();
         }
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
