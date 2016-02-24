@@ -6,7 +6,7 @@ using OrderDynamics.Stores.Web.Models;
 
 namespace OrderDynamics.Stores.Web.Infrastructure.Services
 {
-    public interface IShipmentService {
+    public interface IFakeShipmentService {
         Task<IEnumerable<ShipmentModel>> GetShipmentsAsync();
         Task<ShipmentModel> GetShipmentAsync(int id);
     }

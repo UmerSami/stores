@@ -7,11 +7,11 @@ using OrderDynamics.Stores.Web.Models;
 
 namespace OrderDynamics.Stores.Web.Infrastructure.Services
 {
-    internal class ShipmentService : IShipmentService
+    internal class FakeShipmentService : IFakeShipmentService
     {
         private readonly IApiClient _apiClient;
 
-        public ShipmentService(IApiClient apiClient) {
+        public FakeShipmentService(IApiClient apiClient) {
             if (apiClient == null) {
                 throw new ArgumentNullException("apiClient");
             }
@@ -20,11 +20,11 @@ namespace OrderDynamics.Stores.Web.Infrastructure.Services
         }
 
         public Task<IEnumerable<ShipmentModel>> GetShipmentsAsync() {
-            return _apiClient.GetAsync<IEnumerable<ShipmentModel>>("Shipments");
+            return _apiClient.GetAsync<IEnumerable<ShipmentModel>>("FakeShipments");
         }
 
         public Task<ShipmentModel> GetShipmentAsync(int id) {
-            return _apiClient.GetAsync<ShipmentModel>(string.Format("Shipments/{0}", id));
+            return _apiClient.GetAsync<ShipmentModel>(string.Format("FakeShipments/{0}", id));
         }
     }
 }

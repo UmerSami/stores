@@ -7,18 +7,18 @@ using OrderDynamics.Stores.Web.Infrastructure.Services;
 namespace OrderDynamics.Stores.Web.Controllers {
     public class HomeController : Controller {
 
-        private readonly IShipmentService _shipmentService;
+        private readonly IFakeShipmentService _fakeShipmentService;
 
-        public HomeController(IShipmentService shipmentService) {
-            if (shipmentService == null) {
-                throw new ArgumentNullException("shipmentService");
+        public HomeController(IFakeShipmentService fakeShipmentService) {
+            if (fakeShipmentService == null) {
+                throw new ArgumentNullException("fakeShipmentService");
             }
 
-            _shipmentService = shipmentService;
+            _fakeShipmentService = fakeShipmentService;
         }
 
         public async Task<IActionResult> Index() {
-            var shipments = await _shipmentService.GetShipmentsAsync();
+            var shipments = await _fakeShipmentService.GetShipmentsAsync();
 
             return View(shipments);
         }
