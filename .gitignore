@@ -198,3 +198,4 @@ FakesAssemblies/
 # web config
 *.config
 appsettings.secret.json
+/src/OrderDynamics.Stores.Web/wwwroot/lib
