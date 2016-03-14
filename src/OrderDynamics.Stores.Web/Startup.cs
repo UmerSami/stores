@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using OrderDynamics.Stores.Web.Infrastructure.ApiClient;
+using OrderDynamics.Stores.Web.Infrastructure.ApiClient.Core;
 using OrderDynamics.Stores.Web.Infrastructure.Configuration;
 using OrderDynamics.Stores.Web.Infrastructure.Middleware;
 using OrderDynamics.Stores.Web.Infrastructure.Services;
@@ -28,12 +29,16 @@ namespace OrderDynamics.Stores.Web
             services.AddMvc();
 
             services.AddTransient<IApiClient, WebApiClient>();
+
             services.AddScoped<IFakeShipmentService, FakeShipmentService>();
+
+            services.AddScoped<IRequestCredentialsProvider, BasicRequestCredentialsProvider>();
+            services.AddScoped<IRequestVersionProvider, RequestVersionProvider>();
+            services.AddScoped<IRequestBuilder, RequestBuilder>();
         }
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app) {
-
             app.UseMiddleware<SampleMiddleware>();
             app.UseStaticFiles();
             app.UseMvc(ConfigureRoutes);
@@ -42,6 +47,7 @@ namespace OrderDynamics.Stores.Web
         private void SetupConfiguration() {
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.secret.json", true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();

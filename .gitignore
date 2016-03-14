@@ -197,3 +197,4 @@ FakesAssemblies/
 
 # web config
 *.config
+appsettings.secret.json

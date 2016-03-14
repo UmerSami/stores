@@ -1,25 +1,29 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.OptionsModel;
+using OrderDynamics.Stores.Web.Infrastructure.ApiClient.Core;
 using OrderDynamics.Stores.Web.Infrastructure.Configuration;
 
 namespace OrderDynamics.Stores.Web.Infrastructure.ApiClient
 {
     internal class WebApiClient : IApiClient
     {
-        private const string ApiVersionHeaderName = "od-api-version";
 
         private readonly IOptions<ConfigurationOptions> _options;
+        private readonly IRequestBuilder _requestBuilder;
 
-        public WebApiClient(IOptions<ConfigurationOptions> options) {
+        public WebApiClient(IRequestBuilder requestBuilder, IOptions<ConfigurationOptions> options) {
+            if (requestBuilder == null) {
+                throw new ArgumentNullException("requestBuilder");
+            }
             if (options == null) {
                 throw new ArgumentNullException("options");
             }
 
+            _requestBuilder = requestBuilder;
             _options = options;
         }
 
@@ -27,14 +31,13 @@ namespace OrderDynamics.Stores.Web.Infrastructure.ApiClient
         {
             var result = default(TResult);
 
-            using (var client = new HttpClient())
-            {
+            using (var client = new HttpClient()) {
+
                 client.BaseAddress = new Uri(_options.Value.WebApiBaseUrl);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var requestMessage = new HttpRequestMessage(HttpMethod.Get, action);
-                requestMessage.Headers.Add(ApiVersionHeaderName, GetVersion(action));
+                var requestMessage = _requestBuilder.Build(HttpMethod.Get, action);
 
                 var response = await client.SendAsync(requestMessage);
                 if (response.IsSuccessStatusCode) {
@@ -44,28 +47,6 @@ namespace OrderDynamics.Stores.Web.Infrastructure.ApiClient
             }
 
             return result;
-        }
-
-        private string GetVersion(string action) {
-            //the version is not configured.
-            if (_options.Value.WebApiVersion == null) {
-                return string.Empty;
-            }
-
-            var defaultVersion = _options.Value.WebApiVersion.Version;
-
-            var versionOverrides = _options.Value.WebApiVersion.VersionOverrides;
-            if (versionOverrides == null) {
-                return defaultVersion;
-            }
-
-            var overridenVersion = versionOverrides.FirstOrDefault(v => string.Equals(action, v.ApiControllerName, StringComparison.OrdinalIgnoreCase));
-
-            if (overridenVersion != null) {
-                return overridenVersion.Version;
-            }
-
-            return defaultVersion;
         }
     }
 }
