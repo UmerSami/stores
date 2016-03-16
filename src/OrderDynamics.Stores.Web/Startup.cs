@@ -28,13 +28,13 @@ namespace OrderDynamics.Stores.Web
 
             services.AddMvc();
 
-            services.AddTransient<IApiClient, WebApiClient>();
-
             services.AddScoped<IFakeShipmentService, FakeShipmentService>();
 
+            services.AddScoped<IApiClientFactory, WebApiClientFactory>();
             services.AddScoped<IRequestCredentialsProvider, BasicRequestCredentialsProvider>();
             services.AddScoped<IRequestVersionProvider, RequestVersionProvider>();
             services.AddScoped<IRequestBuilder, RequestBuilder>();
+            services.AddScoped<IHttpClientProvider, TransientHttpClientProvider>();
         }
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

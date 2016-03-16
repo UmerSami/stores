@@ -9,22 +9,26 @@ namespace OrderDynamics.Stores.Web.Infrastructure.Services
 {
     internal class FakeShipmentService : IFakeShipmentService
     {
-        private readonly IApiClient _apiClient;
+        private readonly IApiClientFactory _apiClientFactory;
 
-        public FakeShipmentService(IApiClient apiClient) {
-            if (apiClient == null) {
-                throw new ArgumentNullException("apiClient");
+        public FakeShipmentService(IApiClientFactory apiClientFactory) {
+            if (apiClientFactory == null) {
+                throw new ArgumentNullException("apiClientFactory");
             }
 
-            _apiClient = apiClient;
+            _apiClientFactory = apiClientFactory;
         }
 
         public Task<IEnumerable<ShipmentModel>> GetShipmentsAsync() {
-            return _apiClient.GetAsync<IEnumerable<ShipmentModel>>("FakeShipments");
+            using (var client = _apiClientFactory.GetApiClient()) {
+                return client.GetAsync<IEnumerable<ShipmentModel>>("FakeShipments");
+            } 
         }
 
         public Task<ShipmentModel> GetShipmentAsync(int id) {
-            return _apiClient.GetAsync<ShipmentModel>(string.Format("FakeShipments/{0}", id));
+            using (var client = _apiClientFactory.GetApiClient()) {
+                return client.GetAsync<ShipmentModel>(string.Format("FakeShipments/{0}", id));
+            }
         }
     }
 }
