@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using OrderDynamics.Stores.Web.Infrastructure.ApiClient;
 using OrderDynamics.Stores.Web.Models;
@@ -19,15 +18,19 @@ namespace OrderDynamics.Stores.Web.Infrastructure.Services
             _apiClientFactory = apiClientFactory;
         }
 
-        public Task<IEnumerable<ShipmentModel>> GetShipmentsAsync() {
+        //the async await part of this method is crucial, if you would remove it -> 
+        //client will be disposed BEFORE you will actually execute the Api Call and will fail
+        public async Task<IEnumerable<ShipmentModel>> GetShipmentsAsync() {
             using (var client = _apiClientFactory.GetApiClient()) {
-                return client.GetAsync<IEnumerable<ShipmentModel>>("FakeShipments");
+                return await client.GetAsync<IEnumerable<ShipmentModel>>("FakeShipments");
             } 
         }
 
-        public Task<ShipmentModel> GetShipmentAsync(int id) {
+        //the async await part of this method is crucial, if you would remove it -> 
+        //client will be disposed BEFORE you will actually execute the Api Call and will fail
+        public async Task<ShipmentModel> GetShipmentAsync(int id) {
             using (var client = _apiClientFactory.GetApiClient()) {
-                return client.GetAsync<ShipmentModel>(string.Format("FakeShipments/{0}", id));
+                return await client.GetAsync<ShipmentModel>(string.Format("FakeShipments/{0}", id));
             }
         }
     }
