@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0-*",
+  "description": "OrderDynamics.Stores.UnitTests Class Library",
+  "authors": [ "skazhura" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+
+  "dependencies": {
+    "moq.netcore": "4.4.0-beta8",
+    "OrderDynamics.Stores.Web": "",
+    "xunit": "2.1.0",
+    "xunit.runner.dnx": "2.1.0-rc1-build204"
+  },
+  "commands": {
+    "test": "xunit.runner.dnx"
+  },
+  "frameworks": {
+    "dnxcore50": { }
+  }
+}

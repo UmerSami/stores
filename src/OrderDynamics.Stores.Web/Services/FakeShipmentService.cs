@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using OrderDynamics.Stores.Web.Infrastructure.ApiClient;
 using OrderDynamics.Stores.Web.Models;
 
-namespace OrderDynamics.Stores.Web.Infrastructure.Services
+namespace OrderDynamics.Stores.Web.Services
 {
-    internal class FakeShipmentService : IFakeShipmentService
+    public class FakeShipmentService : IFakeShipmentService
     {
         private readonly IApiClientFactory _apiClientFactory;
 

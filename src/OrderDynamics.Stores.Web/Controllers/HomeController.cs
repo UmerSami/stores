@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
-using OrderDynamics.Stores.Web.Infrastructure.Services;
+using OrderDynamics.Stores.Web.Services;
 
 namespace OrderDynamics.Stores.Web.Controllers {
     public class HomeController : Controller {

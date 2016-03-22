@@ -1,6 +1,6 @@
 ﻿namespace OrderDynamics.Stores.Web.Infrastructure.ApiClient
 {
-    internal interface IApiClientFactory {
+    public interface IApiClientFactory {
         IApiClient GetApiClient();
     }
 }

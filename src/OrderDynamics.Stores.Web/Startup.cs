@@ -8,7 +8,7 @@ using OrderDynamics.Stores.Web.Infrastructure.ApiClient;
 using OrderDynamics.Stores.Web.Infrastructure.ApiClient.Core;
 using OrderDynamics.Stores.Web.Infrastructure.Configuration;
 using OrderDynamics.Stores.Web.Infrastructure.Middleware;
-using OrderDynamics.Stores.Web.Infrastructure.Services;
+using OrderDynamics.Stores.Web.Services;
 
 namespace OrderDynamics.Stores.Web
 {

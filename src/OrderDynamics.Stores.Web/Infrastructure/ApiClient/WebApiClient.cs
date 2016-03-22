@@ -35,10 +35,15 @@ namespace OrderDynamics.Stores.Web.Infrastructure.ApiClient
 
             var requestMessage = _requestBuilder.Build(HttpMethod.Get, action);
 
-            var response = await GetHttpClient().SendAsync(requestMessage);
-            if (response.IsSuccessStatusCode) {
-                var stream = await response.Content.ReadAsStreamAsync();
-                result = (TResult)(new DataContractJsonSerializer(typeof(TResult)).ReadObject(stream));
+            try {
+                var response = await GetHttpClient().SendAsync(requestMessage);
+                if (response.IsSuccessStatusCode) {
+                    var stream = await response.Content.ReadAsStreamAsync();
+                    result = (TResult) new DataContractJsonSerializer(typeof (TResult)).ReadObject(stream);
+                }
+            }
+            catch (Exception ex) {
+                //TODO: log an exception
             }
 
             return result;
